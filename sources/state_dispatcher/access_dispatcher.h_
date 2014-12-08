@@ -1,0 +1,51 @@
+#ifndef _COCURC_ACCESS_DISPATCHER_H_
+#define _COCURC_ACCESS_DISPATCHER_H_
+
+#include <memory>
+
+namespace cocurc
+{
+	namespace ad
+	{
+		enum type : char
+		{
+			simple,
+			atomic
+		};
+	}
+	//
+	template< class T, ad::type ad = ad::simple >
+	class access_dispatcher
+	{
+	public:
+		typename T type;
+		typedef T& type_ref;
+		typedef std::shared_ptr< T > type_ptr;
+
+	private:
+		type_ptr value_;
+
+	public:
+		void set_value( const type_ptr value )
+		{
+			value_ = value;
+		}
+		type_ref get_value() const
+		{
+			return *state_;
+		}
+	};
+
+	template< class T >
+	void access_dispatcher< T, ad::atomic >::set_value( const typename access_dispatcher< T, ad::atomic >::type_ptr value )
+	{
+		std::atomic_store_explicit( &value_, value, std::memory_order::memory_order_release );
+	}
+
+	template< class T >
+	typename access_dispatcher< T, ad::atomic >::type_ref access_dispatcher< T, ad::atomic >::get_value() const
+	{
+		return *std::atomic_load_explicit( &value_, std::memory_order::memory_order_consume );
+	}
+}
+#endif // _COCURC_ACCESS_DISPATCHER_H_

@@ -1,0 +1,20 @@
+# alfa_mt4_feeder project history file
+# alfa_mt4_feeder - DLL market data feeder for MT4 server. 
+#  
+
+# please change version only on big changes, this version is connected only to sources not to applications
+# each application have its own version
+
+
+[*] : some common changes
+[-] : delete bug
+[+] : new feature
+
+# TODO !!! Todo: 
+
+ [00.00.00.01], (7-Dec-2014), Ihar Marozau
+---------------------------------------------------------------------------
+[+] added runner pattern to the project
+[+] added batch_runner
+[+] added state_dispatcher
+[+] added lockfree single producer single consumer bqueue
