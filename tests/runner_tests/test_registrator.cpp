@@ -12,7 +12,7 @@ TEST_INIT
 	master_test_suite.add( BOOST_TEST_CASE( &bach_runner_separate_thread_tests ) );
 	
 #ifdef RUN_PERFORMANCE_TESTS
-	ts1->add( BOOST_TEST_CASE( &runner_performance_tests ) );
+	master_test_suite.add( BOOST_TEST_CASE( &runner_performance_tests ) );
 #endif
 
 	return TEST_RETURN;

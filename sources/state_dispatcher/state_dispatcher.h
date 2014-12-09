@@ -20,9 +20,11 @@ namespace cocurc
 		state_ptr state_;
 
 	public:
-		bool emplace( const key_type key, state_type* state )
+		void emplace( const key_type key, state_type* state )
 		{
-			return state_storage_.emplace( std::make_pair( key, state_ptr( state ) ) ).second;
+			const auto result = state_storage_.emplace( std::make_pair( key, state_ptr( state ) ) ).second;
+			if ( !result )
+				throw std::invalid_argument( "state_dispatcher::emplace error: key duplication" );
 		}
 		//
 		void set_state( const key_type key )

@@ -53,7 +53,7 @@ namespace cocurc
 	}
 	const connecting::super::key connecting::type() const
 	{
-		return state::idle;
+		return state::connecting;
 	}
 	void connecting::run()
 	{
@@ -101,7 +101,7 @@ namespace cocurc
 	}
 	const working::super::key working::type() const
 	{
-		return state::idle;
+		return state::working;
 	}
 	void working::run()
 	{

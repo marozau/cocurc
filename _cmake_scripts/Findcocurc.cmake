@@ -1,11 +1,11 @@
 include( utils )
 
-if (system_utilities_ROOT)
+if (cocurc_ROOT)
 	set(cocurc_root ${cocurc_ROOT} )
-elseif(NOT "$ENV{SYSTEM_UTILITIES_ROOT}" STREQUAL "")
-	set(cocurc_root $ENV{CONCURC_ROOT} )
+elseif(NOT "$ENV{COCURC_ROOT}" STREQUAL "")
+	set(cocurc_root $ENV{COCURC_ROOT} )
 else()
-	message(FATAL_ERROR "[ERROR]: No CONCURC_ROOT environment variable found")
+	message(FATAL_ERROR "[ERROR]: No COCURC_ROOT environment variable found")
 endif()
 
 if ("${CMAKE_BUILD_TYPE}" STREQUAL "")
@@ -17,7 +17,7 @@ else()
 endif()
 
 if (cocurc_DEBUG)
-	message(STATUS "We going to look into '${cocurc_root}' (CONCURC_ROOT environment variable) folder.")
+	message(STATUS "We going to look into '${cocurc_root}' (COCURC_ROOT environment variable) folder.")
 	create_string_from_list( component_list ${cocurc_FIND_COMPONENTS} )
 	message(STATUS "We are looking for: '" ${component_list} "' components.")
 endif(cocurc_DEBUG)
@@ -39,7 +39,7 @@ if (cocurc_DEBUG)
 	message(STATUS "Binary search folder: " ${binary_search_folder} )
 endif(cocurc_DEBUG)
 
-set(components bqueue runner state_dispatcher )
+set(components bqueue runner state_dispatcher processor )
 
 foreach(component ${cocurc_FIND_COMPONENTS})
 
@@ -52,6 +52,12 @@ if(we_should_find_${component})
 	set(cocurc_${component}_FOUND FALSE)
 	set(cocurc_${component}_LIBRARIES NOTFOUND)
 
+	find_path( cocurc_${component}_INCLUDE_DIR
+			NAMES "${component}.h"
+			HINTS "${cocurc_root}/sources/${component}/")
+	set(cocurc_${component}_INCLUDE_DIRS ${cocurc_${component}_INCLUDE_DIR})
+
+
 	find_library( cocurc_${component}_LIBRARY
 		NAMES "${component}" 
 		HINTS ${binary_search_folder} )
@@ -59,13 +65,16 @@ if(we_should_find_${component})
 
 	if(NOT cocurc_FIND_QUIETLY)
 		message(STATUS "cocurc ${component} component: ")
+		create_string_from_list(headers ${cocurc_${component}_INCLUDE_DIRS})
+		message(STATUS "   headers  :  " ${headers})
 		create_string_from_list(libraries ${cocurc_${component}_LIBRARIES})
 		message(STATUS "   libraries:  " ${libraries})
 	endif()	
 
-	if(NOT cocurc_${component}_LIBRARY)
+	if(NOT cocurc_${component}_INCLUDE_DIR OR NOT cocurc_${component}_LIBRARY)
 		message(FATAL_ERROR " We can't find cocurc ${component} component")
 	else()
+		set(cocurc_INCLUDE_DIRS ${cocurc_INCLUDE_DIRS} ${cocurc_${component}_INCLUDE_DIRS})
 		set(cocurc_LIBRARIES ${cocurc_LIBRARIES} ${cocurc_${component}_LIBRARIES})
 	endif()
 else()
@@ -74,7 +83,8 @@ endif(we_should_find_${component})
 
 endforeach( component )
 
-set(blogger_INCLUDE_DIRS ${blogger_INCLUDE_DIRS} ${cocurc_root})
+set(cocurc_INCLUDE_DIRS ${cocurc_INCLUDE_DIRS} ${cocurc_root}/sources)
+
 
 if (cocurc_DEBUG)
 	create_string_from_list(headers ${cocurc_INCLUDE_DIRS})

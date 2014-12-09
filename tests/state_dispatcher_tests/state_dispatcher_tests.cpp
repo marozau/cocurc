@@ -14,11 +14,13 @@ namespace cocurc
 		{
 			{
 				state_dispatcher < std::string, int > dispatcher;
-				BOOST_CHECK_EQUAL( dispatcher.emplace( "one", new int( 1 ) ), true );
-				BOOST_CHECK_EQUAL( dispatcher.emplace( "two", new int( 2 ) ), true );
-				BOOST_CHECK_EQUAL( dispatcher.emplace( "three", new int( 3 ) ), true );
-				BOOST_CHECK_EQUAL( dispatcher.emplace( "four", new int( 4 ) ), true );
-				BOOST_CHECK_EQUAL( dispatcher.emplace( "five", new int( 5 ) ), true );
+				BOOST_CHECK_NO_THROW( dispatcher.emplace( "one", new int( 1 ) ) );
+				BOOST_CHECK_NO_THROW( dispatcher.emplace( "two", new int( 2 ) ) );
+				BOOST_CHECK_NO_THROW( dispatcher.emplace( "three", new int( 3 ) ) );
+				BOOST_CHECK_NO_THROW( dispatcher.emplace( "four", new int( 4 ) ) );
+				BOOST_CHECK_NO_THROW( dispatcher.emplace( "five", new int( 5 ) ) );
+
+				BOOST_CHECK_THROW( dispatcher.emplace( "five", new int( 5 ) ), std::invalid_argument );
 			}
 			{
 				enum value
@@ -30,11 +32,13 @@ namespace cocurc
 					five
 				};
 				state_dispatcher < value, int > dispatcher;
-				BOOST_CHECK_EQUAL( dispatcher.emplace( one, new int( 1 ) ), true );
-				BOOST_CHECK_EQUAL( dispatcher.emplace( two, new int( 2 ) ), true );
-				BOOST_CHECK_EQUAL( dispatcher.emplace( three, new int( 3 ) ), true );
-				BOOST_CHECK_EQUAL( dispatcher.emplace( four, new int( 4 ) ), true );
-				BOOST_CHECK_EQUAL( dispatcher.emplace( five, new int( 5 ) ), true );
+				BOOST_CHECK_NO_THROW( dispatcher.emplace( one, new int( 1 ) ) );
+				BOOST_CHECK_NO_THROW( dispatcher.emplace( two, new int( 2 ) ) );
+				BOOST_CHECK_NO_THROW( dispatcher.emplace( three, new int( 3 ) ) );
+				BOOST_CHECK_NO_THROW( dispatcher.emplace( four, new int( 4 ) ) );
+				BOOST_CHECK_NO_THROW( dispatcher.emplace( five, new int( 5 ) ) );
+
+				BOOST_CHECK_THROW( dispatcher.emplace( five, new int( 5 ) ), std::invalid_argument );
 			}
 		}
 		void state_dispatcher_get_state_tests()
