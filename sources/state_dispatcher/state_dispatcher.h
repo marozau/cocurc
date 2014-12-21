@@ -6,11 +6,15 @@
 
 namespace cocurc
 {
-	template< class key_type, class state_type >
+	template< class key_type >
+	class abstract_state;
+
+	template< class key_type >
 	class state_dispatcher 
 	{
+	public:
 		typedef key_type key_type;
-		typedef state_type state_type;
+		typedef typename abstract_state< key_type > state_type;
 		typedef typename std::shared_ptr< state_type > state_ptr;
 		typedef state_type& state_ref;
 		typedef typename std::unordered_map< key_type, state_ptr > state_storage;

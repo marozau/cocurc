@@ -1,7 +1,7 @@
 @echo off
 
 set SOLUTION_NAME=cocurc
-set BOOST_ROOT=D:/usr/boost_1_57_0
+set BOOST_ROOT=C:/usr/boost_1_57_0
 
 set BUILD_TYPE=Debug
 if [%1]==[Release] (

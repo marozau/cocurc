@@ -12,23 +12,6 @@ namespace cocurc
 		virtual void disconnect() = 0;
 		virtual bool logon() = 0;
 		virtual void logout() = 0;
-		virtual bool idle() = 0;
-		virtual bool ping() = 0;
-	};
-	class network_listener
-	{
-	public:
-		virtual ~network_listener() {}
-		//
-		virtual bool is_any_data() = 0;
-		virtual bool recv() = 0;
-	};
-	class network_speaker
-	{
-	public:
-		virtual ~network_speaker() {}
-		//
-		virtual bool send() = 0;
 	};
 }
 
