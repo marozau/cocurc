@@ -1,6 +1,7 @@
 #include "test_registrator.h"
 
 #include <thread>
+#include <atomic>
 #include <boost/thread.hpp>
 
 #include "bqueue_dispatcher.h"
@@ -38,28 +39,32 @@ namespace cocurc
 				BOOST_CHECK_EQUAL( i, ++pop_counter );
 			};
 			
-			bool start = false;
-			bool stop = false;
+			std::atomic_bool start;
+			start.store( false, std::memory_order::memory_order_release );
+
+			std::atomic_bool stop;
+			stop.store( false, std::memory_order::memory_order_release );
+
 			std::thread push_thread( [ & ]()
 			{
-				while ( !start )
+				while ( !start.load( std::memory_order::memory_order_consume ) )
 					;
-				while ( !stop )
+				while ( !stop.load( std::memory_order::memory_order_consume ) )
 					dispatcher.push( push );
 			} );
 			std::thread pop_thread( [ & ]()
 			{
-				while ( !start )
+				while ( !start.load( std::memory_order::memory_order_consume ) )
 					;
-				while ( !stop )
+				while ( !stop.load( std::memory_order::memory_order_consume ) )
 					dispatcher.pop( pop );
 				dispatcher.pop( pop );
 			} );
 
 			const size_t time_to_sleep = 500ul;
-			start = true;
+			start.store( true, std::memory_order::memory_order_release );
 			boost::this_thread::sleep( boost::posix_time::milliseconds( time_to_sleep ) );
-			stop = true;
+			stop.store( true, std::memory_order::memory_order_release );
 			
 			push_thread.join();
 			pop_thread.join();
