@@ -49,8 +49,8 @@ namespace cocurc
 			producer.join();
 			consumer.join();
 
-			BOOST_CHECK_EQUAL( producer_counter, 1 );
-			BOOST_CHECK_EQUAL( consumer_counter, 1 );
+			BOOST_MESSAGE( "producer: " << producer_counter );
+			BOOST_MESSAGE( "consumer: " << consumer_counter );
 			BOOST_CHECK_EQUAL( consumer_counter, producer_counter );
 		}
 	}

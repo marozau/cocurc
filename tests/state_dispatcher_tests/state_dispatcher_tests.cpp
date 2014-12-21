@@ -3,6 +3,8 @@
 #include <string>
 
 #include <state_dispatcher.h>
+#include <abstract_state.h>
+#include <batch.h>
 
 using namespace cocurc;
 
@@ -10,50 +12,91 @@ namespace cocurc
 {
 	namespace tests_
 	{
+		namespace details
+		{
+			namespace state
+			{
+				enum type : size_t
+				{
+					first,
+					second,
+					third
+				};
+			}
+
+			class test_state : public abstract_state
+			{
+			public:
+				explicit test_state( state_dispatcher& dispatcher, const batch_ptr& batch )
+					: abstract_state( dispatcher, batch )
+				{
+				}
+				virtual ~test_state() {};
+				//
+				virtual void start() {}
+				virtual void stop() {}
+				virtual void error(const std::string& message) {}
+			};
+			class test_state_1 : public test_state
+			{
+			public:
+				explicit test_state_1( state_dispatcher& dispatcher, const batch_ptr& batch )
+					: test_state( dispatcher, batch )
+				{
+				}
+				virtual ~test_state_1() {};
+				virtual const size_t type() const
+				{
+					return state::first;
+				}
+			};
+			class test_state_2 : public test_state
+			{
+			public:
+				explicit test_state_2( state_dispatcher& dispatcher, const batch_ptr& batch )
+					: test_state( dispatcher, batch )
+				{}
+				virtual ~test_state_2() {}
+				virtual const size_t type() const
+				{
+					return state::second;
+				}
+			};
+		}
 		void state_dispatcher_emplace_test()
 		{
 			{
-				state_dispatcher < std::string, int > dispatcher;
-				BOOST_CHECK_EQUAL( dispatcher.emplace( "one", new int( 1 ) ), true );
-				BOOST_CHECK_EQUAL( dispatcher.emplace( "two", new int( 2 ) ), true );
-				BOOST_CHECK_EQUAL( dispatcher.emplace( "three", new int( 3 ) ), true );
-				BOOST_CHECK_EQUAL( dispatcher.emplace( "four", new int( 4 ) ), true );
-				BOOST_CHECK_EQUAL( dispatcher.emplace( "five", new int( 5 ) ), true );
+				batch_ptr batch;
+				state_dispatcher dispatcher;
+				BOOST_CHECK_NO_THROW( dispatcher.emplace( details::state::first, new details::test_state_1( dispatcher, batch ) ) );
+				BOOST_CHECK_NO_THROW( dispatcher.emplace( details::state::second, new details::test_state_2( dispatcher, batch ) ) );
+
+				BOOST_CHECK_THROW( dispatcher.emplace( details::state::first, new details::test_state_1( dispatcher, batch ) ), std::invalid_argument );
 			}
+		}
+		void state_dispatcher_set_state_tests()
+		{
 			{
-				enum value
-				{
-					one,
-					two,
-					three,
-					four,
-					five
-				};
-				state_dispatcher < value, int > dispatcher;
-				BOOST_CHECK_EQUAL( dispatcher.emplace( one, new int( 1 ) ), true );
-				BOOST_CHECK_EQUAL( dispatcher.emplace( two, new int( 2 ) ), true );
-				BOOST_CHECK_EQUAL( dispatcher.emplace( three, new int( 3 ) ), true );
-				BOOST_CHECK_EQUAL( dispatcher.emplace( four, new int( 4 ) ), true );
-				BOOST_CHECK_EQUAL( dispatcher.emplace( five, new int( 5 ) ), true );
+				batch_ptr batch;
+				state_dispatcher dispatcher;
+				BOOST_CHECK_NO_THROW( dispatcher.emplace( details::state::first, new details::test_state_1( dispatcher, batch ) ) );
+				BOOST_CHECK_NO_THROW( dispatcher.emplace( details::state::second, new details::test_state_2( dispatcher, batch ) ) );
+
+				BOOST_CHECK_NO_THROW( dispatcher.set_state( details::state::first ) );
+				BOOST_CHECK_THROW( dispatcher.set_state( details::state::third ), std::invalid_argument );
 			}
 		}
 		void state_dispatcher_get_state_tests()
 		{
 			{
-				state_dispatcher < std::string, int > dispatcher;
-				//const int value = dispatcher.get_state(); //uncomment to get fatal error: memory access violation;
-				dispatcher.emplace( "state", new int( 1 ) );
-				dispatcher.set_state( "state" );
-				BOOST_CHECK_NO_THROW( dispatcher.get_state() );
+				batch_ptr batch;
+				state_dispatcher dispatcher;
+				BOOST_CHECK_NO_THROW( dispatcher.emplace( details::state::first, new details::test_state_1( dispatcher, batch ) ) );
+				BOOST_CHECK_NO_THROW( dispatcher.emplace( details::state::second, new details::test_state_2( dispatcher, batch ) ) );
 
-			}
-			{
-				state_dispatcher < std::string, int > dispatcher;
-				dispatcher.emplace( "one", new int( 1 ) );
-				dispatcher.emplace( "two", new int( 2 ) );
-				dispatcher.emplace( "three", new int( 3 ) );
-				dispatcher.emplace( "four", new int( 4 ) );
-				dispatcher.emplace( "five", new int( 5 ) );
+				BOOST_CHECK_EQUAL( dispatcher.get_state().get() == nullptr, true );
+				dispatcher.set_state( details::state::first );
+				BOOST_CHECK_EQUAL( dispatcher.get_state().get() == nullptr, false );
 			}
 		}
 	}

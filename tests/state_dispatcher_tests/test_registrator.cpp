@@ -8,8 +8,13 @@ TEST_INIT
 
 	using namespace cocurc::tests_;
 	master_test_suite.add( BOOST_TEST_CASE( &state_dispatcher_emplace_test ) );
+	master_test_suite.add( BOOST_TEST_CASE( &state_dispatcher_set_state_tests ) );
 	master_test_suite.add( BOOST_TEST_CASE( &state_dispatcher_get_state_tests ) );
-	
+	//
+	master_test_suite.add( BOOST_TEST_CASE( &active_state_constructor_tests ) );
+	master_test_suite.add( BOOST_TEST_CASE( &active_state_start_tests ) );
+	master_test_suite.add( BOOST_TEST_CASE( &active_state_stop_tests ) );
+
 #ifdef RUN_PERFORMANCE_TESTS
 #endif
 
