@@ -5,5 +5,7 @@ namespace cocurc
 {
 	namespace tests_
 	{
+		void bqueue_dispatcher_push_tests();
+		void bqueue_dispatcher_push_pop_tests();
 	}
 }

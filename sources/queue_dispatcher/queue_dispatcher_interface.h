@@ -10,13 +10,14 @@ namespace cocurc
 	{
 	public:
 		typedef data_type data_type;
+		typedef typename std::function< void( data_type& data ) > push_functor;
 		typedef typename std::function< void( const data_type& data ) > pop_functor;
 
 	public:
 		virtual ~queue_dispatcher_interface() {}
 		//
-		virtual bool try_push( const data_type&& data ) = 0;
-		virtual void push( const data_type&& data ) = 0;
+		virtual bool try_push( const push_functor func ) = 0;
+		virtual void push( const push_functor func ) = 0;
 		virtual size_t pop( const pop_functor func ) = 0;
 		//
 		virtual void stop() = 0;

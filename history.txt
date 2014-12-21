@@ -1,6 +1,4 @@
-# alfa_mt4_feeder project history file
-# alfa_mt4_feeder - DLL market data feeder for MT4 server. 
-#  
+# cocurc project history file  
 
 # please change version only on big changes, this version is connected only to sources not to applications
 # each application have its own version
@@ -14,7 +12,9 @@
 
  [00.00.00.01], (21-Dec-2014), Ihar Marozau
 ---------------------------------------------------------------------------
-[+] added queue_dispatcher, trading_strategy
+[+] added queue_dispatcher
+[*] remove trading_strategy
+[+] added tests for bqeueu_dispatcher, state_dispatcher
 
  [00.00.00.01], (8-Dec-2014), Ihar Marozau
 ---------------------------------------------------------------------------

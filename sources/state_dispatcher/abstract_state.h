@@ -8,17 +8,10 @@
 
 namespace cocurc
 {
-	template< class key_type >
 	class state_dispatcher;
 
-	template< class key >
 	class abstract_state : public runnable
 	{
-	public:
-		typedef key key;
-		typedef typename abstract_state< key > super;
-		typedef state_dispatcher< key > state_dispatcher;
-
 	protected:
 		state_dispatcher& dispatcher_;
 		cocurc::batch_ptr batch_;
@@ -35,7 +28,7 @@ namespace cocurc
 		virtual void stop() = 0;
 		virtual void error( const std::string& message ) = 0;
 		//
-		virtual const key type() const = 0;
+		virtual const size_t type() const = 0;
 		//
 		virtual void run()
 		{

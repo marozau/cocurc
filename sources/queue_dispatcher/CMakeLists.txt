@@ -6,5 +6,5 @@ find_package( Boost 1.54 ${SEARCH_PARAMETERS} COMPONENTS
 	system
 )
 
-compile_project( ${module_name} "*.cpp" "*.h" STATIC libraries Boost bqueue )
+compile_project( ${module_name} "*.cpp" "*.h" STATIC libraries Boost bqueue runner )
 

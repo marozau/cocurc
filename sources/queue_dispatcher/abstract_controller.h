@@ -3,13 +3,10 @@
 
 #include <runnable.h>
 
-#include <queue_dispatcher_interface.h>
+#include "queue_dispatcher_interface.h"
 
 namespace cocurc
 {
-	template< class data_type >
-	class queue_dispatcher_interface;
-
 	template< class data_type >
 	class abstract_controller : public runnable
 	{

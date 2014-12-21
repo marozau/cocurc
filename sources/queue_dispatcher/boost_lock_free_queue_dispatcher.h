@@ -1,15 +1,19 @@
 #ifndef __COCURC_BOOST_LOCK_FREE_QUEUE_DISPATCHER_H_
 #define __COCURC_BOOST_LOCK_FREE_QUEUE_DISPATCHER_H_
 
-#include <boost/lockfree/queue.hpp>
+#include <functional>
 
-#include "queue_dispatcher_interface.h"
+#include <boost/lockfree/queue.hpp>
 
 namespace cocurc
 {
 	template< class data_type >
-	class boost_lock_free_queue_dispatcher : public queue_dispatcher_interface< data_type >
+	class boost_lock_free_queue_dispatcher
 	{
+	public:
+		typedef data_type data_type;
+		typedef typename std::function< void( const data_type& data ) > pop_functor;
+
 	private:
 		typedef typename boost::lockfree::queue< const data_type > lock_free_queue;
 		lock_free_queue queue_;

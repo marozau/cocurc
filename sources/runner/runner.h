@@ -24,6 +24,7 @@ namespace cocurc
 	class runner
 	{
 	public:
+		typedef affynity_mask_type affynity_mask_type;
 		static const affynity_mask_type default_affinity_mask = 0xffffffff;
 		typedef std::function< void() > callback;
 

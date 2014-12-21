@@ -7,24 +7,16 @@
 
 namespace cocurc
 {
-	template< class data_type >
-	class bqueue_dispatcher
+	template< class data_type, size_t SIZE = 1024 >
+	class bqueue_dispatcher : public queue_dispatcher_interface< data_type >
 	{
-	public:
-		typedef data_type data_type;
-		typedef typename std::function< void( data_type& data ) > push_functor;
-		typedef typename std::function< void( const data_type& data ) > pop_functor;		
-
-	private:
-		typedef typename bqueue< const data_type, 1024 > queue;
+		typedef typename bqueue< data_type, SIZE > queue;
 		queue queue_;
 
 		bool stopping_;
 
 	public:
-		explicit bqueue_dispatcher()
-		{
-		}
+		explicit bqueue_dispatcher() {}
 		virtual ~bqueue_dispatcher() {}
 		//
 		bool try_push( const push_functor func )
@@ -33,7 +25,7 @@ namespace cocurc
 			//{
 			//	memcpy( &destination, &data, sizeof( data_type ) );
 			//};			
-			return queue_.push( push_functor );
+			return queue_.push( func );
 
 		}
 		void push( const push_functor func )
@@ -42,7 +34,7 @@ namespace cocurc
 			{
 				memcpy( &destination, &data, sizeof( FeedTick ) );
 			};*/
-			while ( !queue_.push( push_functor ) && !stopping_ )
+			while ( !queue_.push( func ) && !stopping_ )
 				;
 		}
 
