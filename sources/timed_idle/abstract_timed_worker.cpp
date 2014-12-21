@@ -3,7 +3,7 @@
 namespace cocurc
 {
 	abstract_timed_worker::abstract_timed_worker( const size_t delay, const bool first_run )
-		: timed_idle_( delay, [ this ](){ job_(); }, first_run )
+		: timed_idle_( delay, [ this ](){ job(); }, first_run )
 	{
 
 	}

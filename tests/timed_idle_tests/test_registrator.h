@@ -5,5 +5,8 @@ namespace cocurc
 {
 	namespace tests_
 	{
+		void timed_idle_check_tests();
+		//
+		void abstract_timed_worker_job_tests();
 	}
 }

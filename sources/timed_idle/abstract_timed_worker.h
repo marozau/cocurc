@@ -17,7 +17,7 @@ namespace cocurc
 		//
 		virtual void run();
 		//
-		virtual void job_() = 0;
+		virtual void job() = 0;
 	};
 }
 
