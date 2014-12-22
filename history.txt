@@ -14,7 +14,7 @@
 ---------------------------------------------------------------------------
 [+] added queue_dispatcher
 [*] remove trading_strategy
-[+] added tests for bqeueu_dispatcher, state_dispatcher
+[+] added tests for bqeueu_dispatcher, state_dispatcher, timed_idle
 
  [00.00.00.01], (8-Dec-2014), Ihar Marozau
 ---------------------------------------------------------------------------

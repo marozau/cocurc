@@ -7,8 +7,9 @@ TEST_INIT
 	boost::unit_test_framework::test_suite& master_test_suite = boost::unit_test::framework::master_test_suite();
 
 	using namespace cocurc::tests_;
-//	master_test_suite.add( BOOST_TEST_CASE( &state_dispatcher_emplace_test ) );
-	
+	master_test_suite.add( BOOST_TEST_CASE( &timed_idle_check_tests ) );
+	master_test_suite.add( BOOST_TEST_CASE( &abstract_timed_worker_job_tests ) );
+
 #ifdef RUN_PERFORMANCE_TESTS
 #endif
 
