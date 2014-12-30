@@ -1,10 +1,4 @@
-find_package( Boost 1.54 ${SEARCH_PARAMETERS} COMPONENTS
-	filesystem
-	thread
-	regex
-	date_time
-	system
-)
+find_package( Boost 1.54 )
 
 find_package( concurrentqueue )
 
