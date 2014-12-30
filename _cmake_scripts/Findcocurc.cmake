@@ -39,7 +39,7 @@ if (cocurc_DEBUG)
 	message(STATUS "Binary search folder: " ${binary_search_folder} )
 endif(cocurc_DEBUG)
 
-set(components bqueue runner state_dispatcher processor )
+set(components runner state_dispatcher bqueue timed_idle queue_dispatcher )
 
 foreach(component ${cocurc_FIND_COMPONENTS})
 

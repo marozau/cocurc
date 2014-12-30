@@ -10,6 +10,18 @@
 
 # TODO !!! Todo: 
 
+ [00.00.00.01], (29-Dec-2014), Ihar Marozau
+---------------------------------------------------------------------------
+[-] rename algorithm_visitor to the visitor_functor and added tests
+[+] add visitor_aligned and tests
+
+
+ [00.00.00.01], (24-Dec-2014), Ihar Marozau
+---------------------------------------------------------------------------
+[+] added tests and performance tests for algorithm_visitor
+[+] added concurrentqueue_dispatcher based on concurrentqueue https://github.com/cameron314/concurrentqueue and tests
+
+
  [00.00.00.01], (21-Dec-2014), Ihar Marozau
 ---------------------------------------------------------------------------
 [+] added queue_dispatcher

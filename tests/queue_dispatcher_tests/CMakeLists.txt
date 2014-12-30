@@ -8,6 +8,6 @@ find_package( Boost 1.54 ${SEARCH_PARAMETERS} COMPONENTS
 	unit_test_framework
 )
 
-compile_project( ${tests_name} "*.cpp" "*.h" BINARY tests ${module_name} boost_dynamic_test_helper Boost bqueue runner )
+compile_project( ${tests_name} "*.cpp" "*.h" BINARY tests ${module_name} boost_dynamic_test_helper Boost bqueue runner concurrentqueue )
 register_test( ${tests_name} 20.0 20.0 )
 

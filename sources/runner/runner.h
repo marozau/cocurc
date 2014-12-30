@@ -3,7 +3,6 @@
 
 #include <vector>
 #include <thread>
-#include <mutex>
 #include <functional>
 
 #ifdef _WIN32 // Windows (x64 and x86)
@@ -32,8 +31,6 @@ namespace cocurc
 		typedef std::vector< std::thread > thread_storage;
 		thread_storage thread_storage_;
 		bool stopping_;
-
-		std::mutex runner_protector_;
 
 	public:
 		explicit runner();

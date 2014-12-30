@@ -21,6 +21,8 @@ namespace cocurc
 			};
 			for ( int i = 0; i < 1000; ++i )
 				dispatcher.push( push );
+
+			BOOST_CHECK_EQUAL( counter > 0, true );
 		}
 
 		void bqueue_dispatcher_push_pop_tests()
@@ -61,7 +63,7 @@ namespace cocurc
 				dispatcher.pop( pop );
 			} );
 
-			const size_t time_to_sleep = 500ul;
+			const size_t time_to_sleep = 1000ul;
 			start.store( true, std::memory_order::memory_order_release );
 			boost::this_thread::sleep( boost::posix_time::milliseconds( time_to_sleep ) );
 			stop.store( true, std::memory_order::memory_order_release );
@@ -70,7 +72,7 @@ namespace cocurc
 			pop_thread.join();
 
 			BOOST_CHECK_EQUAL( push_counter, pop_counter );
-			BOOST_MESSAGE( "time: " << time_to_sleep << "; count: " << pop_counter );
+			BOOST_TEST_MESSAGE( "**** bqueue perf. tests. ***** \t time: " << time_to_sleep << " msec; count: " << pop_counter );
 		}
 	}
 }

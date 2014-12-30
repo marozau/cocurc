@@ -15,23 +15,27 @@ namespace cocurc
 		typedef typename std::function< void( const data_type& data ) > pop_functor;
 
 	private:
-		typedef typename boost::lockfree::queue< const data_type > lock_free_queue;
+		typedef typename boost::lockfree::queue< data_type > lock_free_queue;
 		lock_free_queue queue_;
 
-		bool stopping_;
+		bool stopping_ = false;
 
 	public:
 		explicit boost_lock_free_queue_dispatcher( const size_t size )
 			: queue_( size )
 		{
 		}
-		virtual ~boost_lock_free_queue_dispatcher() {}
-		//
-		bool try_push( const data_type&& data )
+
+		virtual ~boost_lock_free_queue_dispatcher() 
+		{
+		}
+		
+		bool try_push( data_type&& data )
 		{
 			return queue_.push( data );
 		}
-		void push( const data_type&& data )
+
+		void push( data_type&& data )
 		{
 			while ( !queue_.push( data ) && !stopping_ )
 				;
@@ -46,7 +50,7 @@ namespace cocurc
 		{
 			stopping_ = true;
 		}
-		//
+
 		size_t size()
 		{
 			return static_cast< size_t >( queue_.empty() );

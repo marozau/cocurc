@@ -1,12 +1,12 @@
-#ifndef __COCURC_ALGORITHM_VISITOR_H_
-#define __COCURC_ALGORITHM_VISITOR_H_
+#ifndef __COCURC_VISITOR_FUNCTOR_H_
+#define __COCURC_VISITOR_FUNCTOR_H_
 
 #include <functional>
 
 namespace cocurc
 {
 	template< class algorithm_type, class data_type >
-	class algorithm_visitor
+	class visitor_functor
 	{		
 	public:
 		typedef algorithm_type algorithm_type;
@@ -16,9 +16,18 @@ namespace cocurc
 		data_type data;
 
 	public:
-		explicit algorithm_visitor( acceptor_method ac )
+		explicit visitor_functor()
+		{
+		}
+
+		explicit visitor_functor( acceptor_method ac )
 			: ac_( ac )
 		{
+		}
+
+		void set_acceptor_method( acceptor_method ac )
+		{
+			ac_ = ac;
 		}
 		void call( algorithm_type& algorithm ) const
 		{
@@ -28,4 +37,4 @@ namespace cocurc
 }
 
 
-#endif // __COCURC_ALGORITHM_VISITOR_H_
+#endif // __COCURC_VISITOR_FUNCTOR_H_

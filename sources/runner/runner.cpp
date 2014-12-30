@@ -32,6 +32,7 @@ namespace cocurc
 		: stopping_( false )
 	{				
 	}
+
 	runner::~runner()
 	{
 		stop();
@@ -39,13 +40,11 @@ namespace cocurc
 
 	void runner::start()
 	{
-		std::lock_guard< std::mutex > lock( runner_protector_ );
 		stopping_ = false;
 	}
+
 	void runner::stop()
 	{				
-		std::lock_guard< std::mutex > lock( runner_protector_ );
-
 		if ( stopping_ )
 			return;
 
@@ -57,11 +56,10 @@ namespace cocurc
 		} );
 		thread_storage_.clear();
 	}
-	// be carefull! to_run.run must be exception safe
+
+	// be carefull! runnable::run must be exception safe
 	void runner::separate_thread( runnable& to_run, const affynity_mask_type affinity_mask )
 	{
-		std::lock_guard< std::mutex > lock( runner_protector_ );
-
 		if ( stopping_ )
 			throw std::logic_error( "runner was stopped" );
 
@@ -72,8 +70,6 @@ namespace cocurc
 
 	void runner::separate_thread( runnable& to_run, callback cb, const affynity_mask_type affinity_mask )
 	{
-		std::lock_guard< std::mutex > lock( runner_protector_ );
-
 		if ( stopping_ )
 			throw std::logic_error( "runner was stopped" );
 
@@ -85,7 +81,7 @@ namespace cocurc
 
 		set_affinity_mask( thread_storage_.back().native_handle(), affinity_mask );
 	}
-	//
+	
 	void runner::this_thread_( runnable& to_run )
 	{
 		while ( !stopping_ )
