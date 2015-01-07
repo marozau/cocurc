@@ -6,5 +6,6 @@ namespace cocurc
 	namespace tests_
 	{
 		void bqueue_performance_tests();
+		void mtx_bqueue_performance_tests();
 	}
 }
