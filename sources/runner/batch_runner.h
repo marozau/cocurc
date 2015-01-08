@@ -2,7 +2,6 @@
 #define _COCURC_BATCH_RUNNER_H_
 
 #include <vector>
-#include <mutex>
 
 #include "runner.h"
 
@@ -20,12 +19,7 @@ namespace cocurc
 		batch_storage batch_storage_;
 		runner runner_;
 
-		std::mutex batch_runner_protector_;
-
 	public:
-		explicit batch_runner();
-		~batch_runner();
-		//
 		void start();
 		void stop();
 		//

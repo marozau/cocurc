@@ -15,7 +15,7 @@ namespace cocurc
 		explicit abstract_timed_worker( const size_t delay, const bool first_run );
 		virtual ~abstract_timed_worker();
 		//
-		virtual void run();
+		virtual void run() final;
 		//
 		virtual void job() = 0;
 	};
