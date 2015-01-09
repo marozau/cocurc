@@ -1,5 +1,5 @@
-#ifndef __COCURC_active_state_WORKER_H_
-#define __COCURC_active_state_WORKER_H_
+#ifndef __COCURC_ACTIVE_STATE_WORKER_H_
+#define __COCURC_ACTIVE_STATE_WORKER_H_
 
 #include <runnable.h>
 
@@ -22,5 +22,5 @@ namespace cocurc
 }
 
 
-#endif // #define __COCURC_active_state_WORKER_H_
+#endif // __COCURC_ACTIVE_STATE_WORKER_H_
 
