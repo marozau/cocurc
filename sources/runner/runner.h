@@ -30,7 +30,7 @@ namespace cocurc
 	private:
 		typedef std::vector< std::thread > thread_storage;
 		thread_storage thread_storage_;
-		bool stopping_;
+		volatile bool stopping_;
 
 	public:
 		explicit runner();

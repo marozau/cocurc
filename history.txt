@@ -10,6 +10,11 @@
 
 # TODO !!! Todo: 
 
+ [00.00.00.01], (10-Jan-2015), Ihar Marozau
+---------------------------------------------------------------------------
+[*] stopping_ variable in runner is now volatile
+
+
  [00.00.00.01], (29-Dec-2014), Ihar Marozau
 ---------------------------------------------------------------------------
 [-] rename algorithm_visitor to the visitor_functor and added tests
