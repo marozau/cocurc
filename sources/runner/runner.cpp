@@ -63,7 +63,7 @@ namespace cocurc
 		if ( stopping_ )
 			throw std::logic_error( "runner was stopped" );
 
-		thread_storage_.push_back( std::thread( [ & ]()	{ this_thread_( to_run ); } ) );
+		thread_storage_.push_back( std::thread( [ & ]()	{ this_thread( to_run ); } ) );
 
 		set_affinity_mask( thread_storage_.back().native_handle(), affinity_mask );
 	}
@@ -75,14 +75,14 @@ namespace cocurc
 
 		thread_storage_.push_back( std::thread( [ &, cb ]()	
 		{ 
-			this_thread_( to_run ); 
+			this_thread( to_run ); 
 			cb();
 		} ) );
 
 		set_affinity_mask( thread_storage_.back().native_handle(), affinity_mask );
 	}
 	
-	void runner::this_thread_( runnable& to_run )
+	void runner::this_thread( runnable& to_run )
 	{
 		while ( !stopping_ )
 		{
