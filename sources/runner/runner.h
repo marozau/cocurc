@@ -42,8 +42,7 @@ namespace cocurc
 		void separate_thread( runnable& to_run, const affynity_mask_type affinity_mask = default_affinity_mask );
 		void separate_thread( runnable& to_run, callback cb, const affynity_mask_type affinity_mask = default_affinity_mask );
 
-	private:
-		void this_thread_( runnable& to_run );
+		void this_thread( runnable& to_run );
 	};
 }
 

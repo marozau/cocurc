@@ -18,7 +18,7 @@ namespace cocurc
 		typedef typename boost::lockfree::queue< data_type > lock_free_queue;
 		lock_free_queue queue_;
 
-		bool stopping_ = false;
+		volatile bool stopping_ = false;
 
 	public:
 		explicit boost_lock_free_queue_dispatcher( const size_t size )

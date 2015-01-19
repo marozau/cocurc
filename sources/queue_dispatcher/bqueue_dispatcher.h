@@ -13,7 +13,7 @@ namespace cocurc
 		typedef typename bqueue< data_type, SIZE > queue;
 		queue queue_;
 
-		bool stopping_ = false;
+		volatile bool stopping_ = false;
 
 	public:
 		explicit bqueue_dispatcher() {}

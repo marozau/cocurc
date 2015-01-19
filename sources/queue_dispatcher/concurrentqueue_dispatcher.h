@@ -25,7 +25,7 @@ namespace cocurc
 		typedef typename moodycamel::ConcurrentQueue< data_type > queue;
 		queue queue_;
 
-		bool stopping_ = false;
+		volatile bool stopping_ = false;
 
 	public:
 		explicit concurrentqueue_dispatcher( const size_t size )
