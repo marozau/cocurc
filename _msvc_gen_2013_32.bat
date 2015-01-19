@@ -1,8 +1,8 @@
 @echo off
 
 set SOLUTION_NAME=cocurc
-set BOOST_ROOT=D:/usr/boost_1_57_0
-set CONCURRENTQUEUE_ROOT=D:/usr/concurrentqueue
+set BOOST_ROOT=C:/usr/boost_1_57_0
+set CONCURRENTQUEUE_ROOT=C:/usr/concurrentqueue
 
 set BUILD_TYPE=Debug
 if [%1]==[Release] (
