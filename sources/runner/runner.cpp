@@ -84,9 +84,16 @@ namespace cocurc
 	
 	void runner::this_thread( runnable& to_run )
 	{
-		while ( !stopping_ )
+		try
 		{
-			to_run.run();
+			while ( !stopping_ )
+			{
+				to_run.run();
+			}
+		}
+		catch ( ... )
+		{
+			// thread safe exception
 		}
 	}
 }
