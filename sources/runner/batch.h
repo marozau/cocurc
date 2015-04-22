@@ -29,7 +29,8 @@ namespace cocurc
 		runnable_storage runnable_storage_;
 
 	public:
-		void add( runnable* to_run );
+		void add( runnable* const to_run );
+		void add( const runnable_ptr to_run );
 		//
 		virtual void run();
 	};

@@ -17,11 +17,18 @@ namespace cocurc
 		} );
 	}
 	//
-	void batch_ptr::add( runnable* to_run )
+	void batch_ptr::add( runnable* const to_run )
 	{
 		if ( to_run == nullptr )
 			throw std::invalid_argument( "batch_ptr::add error: nullptr" );
 		runnable_storage_.emplace_back( runnable_ptr( to_run ) );
+	}
+
+	void batch_ptr::add( const runnable_ptr to_run )
+	{
+		if ( !to_run )
+			throw std::invalid_argument( "batch_ptr::add error: nullptr" );
+		runnable_storage_.emplace_back( to_run );
 	}
 	//
 	void batch_ptr::run()
