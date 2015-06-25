@@ -48,6 +48,11 @@ namespace cocurc
 				sleep_strategy_();
 		}
 
+		void reset()
+		{
+			tt_.reset();
+		}
+		
 		void set_sleep_strategy(callback sleep_strategy) 
 		{
 			sleep_strategy_ = sleep_strategy;
