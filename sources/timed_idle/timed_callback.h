@@ -56,8 +56,6 @@ namespace cocurc
 			void reset()
 			{
 				tt_.reset();
-				if ( first_run )
-					idle_time_ = 0;
 			}
 
 			virtual void run() final

@@ -17,10 +17,6 @@ namespace cocurc
 
 	private:
 		result_t start_;
-
-	private:
-		time_tracker( const time_tracker& ) = delete;
-		time_tracker& operator=( const time_tracker& ) = delete;
 			
 	public:		
 		time_tracker()
