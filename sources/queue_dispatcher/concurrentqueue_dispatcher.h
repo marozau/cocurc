@@ -50,12 +50,12 @@ namespace cocurc
 		
 		bool try_push( data_type&& data )
 		{
-			return queue_.try_enqueue( data );
+			return queue_.try_enqueue( std::move( data ) );
 		}
 
 		void push( data_type&& data )
 		{
-			while ( !try_push( data ) && !stopping_ )
+			while ( !try_push( std::move( data ) ) && !stopping_ )
 				;
 		}
 
