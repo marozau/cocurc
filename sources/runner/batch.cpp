@@ -11,10 +11,8 @@ namespace cocurc
 	//
 	void batch::run()
 	{
-		std::for_each( runnable_storage_.cbegin(), runnable_storage_.cend(), []( runnable& to_run )
-		{
-			to_run.run();
-		} );
+		static auto lambda = []( runnable& to_run )	{ to_run.run();	};
+		std::for_each( runnable_storage_.cbegin(), runnable_storage_.cend(), lambda );
 	}
 	//
 	void batch_ptr::add( runnable* const to_run )
@@ -33,9 +31,7 @@ namespace cocurc
 	//
 	void batch_ptr::run()
 	{
-		std::for_each( runnable_storage_.cbegin(), runnable_storage_.cend(), []( const runnable_ptr& to_run )
-		{
-			to_run->run();
-		} );
+		static auto lambda = []( const runnable_ptr& to_run ) { to_run->run(); };
+		std::for_each( runnable_storage_.cbegin(), runnable_storage_.cend(), lambda );
 	}
 }

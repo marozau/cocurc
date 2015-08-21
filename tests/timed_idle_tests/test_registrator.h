@@ -5,8 +5,10 @@ namespace cocurc
 {
 	namespace tests_
 	{
-		void timed_idle_check_tests();
+		void timed_callback_run_tests();
 		//
-		void abstract_timed_worker_job_tests();
+		void sieved_time_source_constructor_tests();
+		void time_source_get_current_time_tests();		
+		void time_source_performance_tests();
 	}
 }

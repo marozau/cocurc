@@ -21,7 +21,7 @@ namespace cocurc
 		visitor_aligned() {}		
 		template< typename T >
 		visitor_aligned( T&& t )
-			: obj_( t )
+			: obj_( std::move( t ) )
 		{
 			static_assert(std::is_base_of<Base, T>::value, "T must be derived from Base class");
 		}

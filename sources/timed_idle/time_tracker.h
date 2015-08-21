@@ -1,48 +1,40 @@
-// https://github.com/marozau/system_utilities.git
-
 #ifndef _COCURC_TIME_TRACKER_H_
 #define _COCURC_TIME_TRACKER_H_
 
-#include <chrono>
+#include "time_source.h"
 
 namespace cocurc
 {
 	// time_tracker class count time until it was created or reseted.
 	// could be used for performance tests, for processing time calculating
 	// not a virtual destructor class
-	template< class T >
+	template< class T, class R, template< typename, typename > class time_source_type = time_source >
 	class time_tracker
 	{
 	public:
-		typedef long long elapsed_type;
+		typedef typename time_source_type< T, R > time_source;
+		typedef typename time_source::result_t result_t;
 
 	private:
-		elapsed_type start_;
+		result_t start_;
 			
-	public:
-		explicit time_tracker()				
+	public:		
+		time_tracker()
 		{
-			using namespace std::chrono;
-			start_ = duration_cast< T >( high_resolution_clock::now( ).time_since_epoch() ).count();
+			start_ = time_source::get_current_time();
 		}
-		time_tracker( const time_tracker& other )			
-			: start_( other.start_ )
-		{
-		}
+
 		~time_tracker()
 		{
 		}
 		//
 		void reset()
 		{
-			using namespace std::chrono;
-			start_ = duration_cast< T >( high_resolution_clock::now().time_since_epoch()).count();
+			start_ = time_source::get_current_time();
 		}
-		elapsed_type elapsed() const
+		result_t elapsed() const
 		{
-			using namespace std::chrono;
-			const auto now = duration_cast< T >(high_resolution_clock::now( ).time_since_epoch()).count( );
-			return now - start_;
+			return time_source::get_time_diff( start_ );
 		}
 	};
 }
