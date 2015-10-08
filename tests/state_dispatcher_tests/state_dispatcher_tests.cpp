@@ -36,6 +36,10 @@ namespace cocurc
 				virtual void start() {}
 				virtual void stop() {}
 				virtual void error(const std::string& message) {}
+				virtual bool is_alive() const
+				{
+					return false;
+				}
 			};
 			class test_state_1 : public test_state
 			{

@@ -41,6 +41,10 @@ namespace cocurc
 				{
 					return state::start;
 				}
+				virtual bool is_alive() const
+				{
+					return true;
+				}
 			};
 			class test_state_stop : public abstract_state
 			{
@@ -64,6 +68,10 @@ namespace cocurc
 				virtual const size_t type() const
 				{
 					return state::stop;
+				}
+				virtual bool is_alive() const
+				{
+					return false;
 				}
 			};
 		}

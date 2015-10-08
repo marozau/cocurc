@@ -14,7 +14,12 @@ namespace cocurc
 		inline void operator=(data_type&& obj);		
 	};
 
-	template< class data_type >
+	struct traits : public moodycamel::ConcurrentQueueDefaultTraits
+	{
+		static const size_t BLOCK_SIZE = 256;
+	};
+
+	template< class data_type, typename Traits = traits >
 	class concurrentqueue_dispatcher
 	{
 	public:
@@ -22,7 +27,7 @@ namespace cocurc
 		typedef typename std::function< void( const data_type& data ) > pop_functor;
 
 	private:
-		typedef typename moodycamel::ConcurrentQueue< data_type > queue;
+		typedef typename moodycamel::ConcurrentQueue< data_type, Traits > queue;
 		queue queue_;
 
 		volatile bool stopping_ = false;
@@ -37,17 +42,6 @@ namespace cocurc
 		{
 		}
 
-		bool try_push( const data_type& data )
-		{
-			return queue_.try_enqueue( data );
-		}
-
-		void push( const data_type& data )
-		{
-			while ( !try_push( data ) && !stopping_ )
-				;
-		}
-		
 		bool try_push( data_type&& data )
 		{
 			return queue_.try_enqueue( std::move( data ) );

@@ -17,6 +17,8 @@ TEST_INIT
 	//
 	master_test_suite.add( BOOST_TEST_CASE( &visitor_aligned_constructor_tests ) );
 
+	master_test_suite.add( BOOST_TEST_CASE( &concurrentqueue_dispatcher_push_pop_tests ) );
+
 #ifdef RUN_PERFORMANCE_TESTS
 	master_test_suite.add( BOOST_TEST_CASE( &bqueue_dispatcher_push_pop_tests ) );
 	master_test_suite.add( BOOST_TEST_CASE( &visitor_functor_performance_tests ) );

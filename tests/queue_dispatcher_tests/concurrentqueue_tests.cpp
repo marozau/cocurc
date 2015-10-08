@@ -17,7 +17,7 @@ namespace cocurc
 			test_dispatcher dispatcher( 1024 );
 			int i = 0;
 			for ( ; i < 1000; ++i )
-				dispatcher.push( i );
+				dispatcher.push( std::move( i ) );
 			BOOST_CHECK_EQUAL( i > 0, true );
 		}
 
@@ -38,8 +38,11 @@ namespace cocurc
 				while ( !start.load( std::memory_order::memory_order_consume ) )
 					;
 				
-				while ( !stop.load( std::memory_order::memory_order_consume ) )
-					dispatcher.push( ++push_counter );
+				while ( !stop.load( std::memory_order::memory_order_consume ) ) 
+				{
+					int to_push = ++push_counter;
+					dispatcher.push( std::move( to_push ) );
+				}
 			} );
 
 			struct pop_consumer : public consumer_object < int >
